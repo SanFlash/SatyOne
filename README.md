@@ -67,6 +67,16 @@ SatyOne is designed as a cross-industry prompt and workflow workspace, not a QA-
 
 Each role template is intended to provide a useful starting point with a purpose, detailed instruction, example input, expected output, tags and professional limitations. The catalogue is extensible: add new role categories and command templates as real user needs emerge. No finite catalogue can enumerate every occupation or jurisdiction. For regulated or safety-critical work, prompts are organizational aids only and do not replace qualified professional judgment, applicable standards, or legal review.
 
+## Free and open-source tool directory
+
+The directory contains references to local-first and open-source tools across AI/model serving, coding, API development, browser testing, data analysis, design, office productivity, observability, databases and authorized defensive security. Examples include Ollama, llama.cpp, Open WebUI, LibreChat, Dify, Flowise, Langflow, Playwright, Selenium, pytest, Bruno, Jupyter, DuckDB, PostgreSQL, Penpot, GIMP, Inkscape, Blender, LibreOffice, Prometheus, Wireshark and OWASP ZAP.
+
+**Pricing and licensing are not interchangeable.** The directory labels open-source/self-hosted software separately from hosted free plans, freemium services and source-available projects. Free tiers, licenses, eligibility, quotas and commercial-use conditions can change; verify the official project page before adoption. Self-hosted software may still require hardware, storage, administration and paid model/API access. Directory inclusion does not mean SatyOne has integrated or security-tested that product.
+
+## Command variants and professional workflows
+
+The command catalogue is an extensible set of prompt macros, not a universal executable shell. Each macro should state its purpose, detailed instruction, example input, expected output, tags, difficulty and limitations. Variants cover planning, analysis, execution preparation, review, quality control, reporting, risk and communication across professional domains. Users should adapt placeholders and validate high-impact output with accountable experts.
+
 ## Browser-only offline workspace
 
 The frontend now includes a bundled local command catalogue and an offline prompt builder. If the API is unreachable (including on a frontend-only Vercel deployment), Command Explorer, search/filtering and prompt generation continue to work without starting FastAPI.
