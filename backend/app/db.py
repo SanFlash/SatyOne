@@ -10,7 +10,7 @@ BACKEND_DIR = Path(__file__).resolve().parents[1]
 DATA_DIR = BACKEND_DIR / "data"
 DATA_DIR.mkdir(parents=True, exist_ok=True)
 DEFAULT_DATABASE_URL = f"sqlite:///{(DATA_DIR / 'satyone.db').as_posix()}"
-DATABASE_URL = settings.database_url or DEFAULT_DATABASE_URL
+DATABASE_URL = (settings.database_url.strip() if settings.database_url and settings.database_url.strip() else DEFAULT_DATABASE_URL)
 
 if DATABASE_URL.startswith("sqlite"):
     connect_args = {"check_same_thread": False, "timeout": 30}
