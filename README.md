@@ -67,6 +67,18 @@ SatyOne is designed as a cross-industry prompt and workflow workspace, not a QA-
 
 Each role template is intended to provide a useful starting point with a purpose, detailed instruction, example input, expected output, tags and professional limitations. The catalogue is extensible: add new role categories and command templates as real user needs emerge. No finite catalogue can enumerate every occupation or jurisdiction. For regulated or safety-critical work, prompts are organizational aids only and do not replace qualified professional judgment, applicable standards, or legal review.
 
+## Advanced productivity modules
+
+- **Command Studio:** create reusable slash macros with a role category, detailed instruction template, example input and a quality checklist. Custom commands are stored in browser local storage on that browser; they are not synchronized between devices or users.
+- **Command variants:** choose concise, beginner, professional, expert, strict, creative or audit-style output in the prompt builder. A variant changes the instruction requirements; it does not change the underlying model or grant new capabilities.
+- **Knowledge Studio:** paste source text or import a text-based TXT, Markdown, CSV, JSON or LOG file (up to 1 MB). The extracted text is placed into the prompt context locally. This is not a document search index, OCR engine, PDF parser or cloud upload service. Review imported content and remove secrets before use.
+- **Expanded catalogue:** the connected and offline experiences merge the bundled cross-industry catalogue, so the broader local command collection remains searchable even when the backend catalogue is older or unavailable.
+- **Free tools directory:** search references to local AI runtimes, development tools, testing, data, design and security utilities. Each tool must be installed/configured separately. Directory entries do not mean SatyOne can launch or control those tools.
+
+### Local model workspace setup
+
+For a private, local-model workflow, install [Ollama](https://ollama.com/) on your own computer, download a model that fits your hardware, then use the Ollama CLI/API according to its official documentation. SatyOne currently provides the directory and setup guidance; it does **not** yet proxy model requests to a local Ollama endpoint. Never expose an unauthenticated local model endpoint to the public internet.
+
 ## Free and open-source tool directory
 
 The directory contains references to local-first and open-source tools across AI/model serving, coding, API development, browser testing, data analysis, design, office productivity, observability, databases and authorized defensive security. Examples include Ollama, llama.cpp, Open WebUI, LibreChat, Dify, Flowise, Langflow, Playwright, Selenium, pytest, Bruno, Jupyter, DuckDB, PostgreSQL, Penpot, GIMP, Inkscape, Blender, LibreOffice, Prometheus, Wireshark and OWASP ZAP.
