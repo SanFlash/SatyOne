@@ -218,7 +218,7 @@ def seed_qa_specialist_commands(db):
                 continue
             syntax = f"/{prefix}_{key.replace('-', '_').upper()}"
             instruction = (
-                f"Act as a senior QA engineer specializing in {label.lower()}. {focus}\\n\\n"
+                f"Act as a senior QA engineer specializing in {label.lower()}. {focus}\n\n"
                 "Work from the supplied application context, requirements, artifacts and authorized scope. "
                 "Start by listing assumptions and missing inputs. Provide a step-by-step method, concrete examples, "
                 "test data or code where appropriate, expected outcomes, negative and boundary cases, and traceability "
@@ -269,7 +269,7 @@ def seed_advanced_commands(db):
         for key, label, syntax_key, focus in ADVANCED_PATTERNS:
             slug = f"{domain_slug}-advanced-{key}"
             if db.query(Command.id).filter_by(slug=slug).first(): continue
-            detail = (f"Act as a principal {domain_name.lower()} practitioner. {focus}\\n\\n"
+            detail = (f"Act as a principal {domain_name.lower()} practitioner. {focus}\n\n"
                 "Execution protocol: define objective and measurable outcomes; inventory inputs, stakeholders, dependencies and constraints; "
                 "separate verified facts, user claims, assumptions and estimates; define scope and exclusions; provide phased actions, "
                 "decision branches, responsible roles and artifacts; include normal, negative, boundary, exception and recovery cases; "
