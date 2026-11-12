@@ -69,3 +69,12 @@ class CommandProvider(Base):
     tested_model: Mapped[str] = mapped_column(String(120), default="")
     last_verified_at: Mapped[datetime | None] = mapped_column(DateTime(timezone=True), nullable=True)
     __table_args__ = (UniqueConstraint("command_id", "provider_slug"),)
+
+
+class SavedPromptVersion(Base):
+    __tablename__ = "saved_prompt_versions"
+    id: Mapped[int] = mapped_column(Integer, primary_key=True)
+    prompt_id: Mapped[int] = mapped_column(ForeignKey("saved_prompts.id", ondelete="CASCADE"), index=True)
+    title: Mapped[str] = mapped_column(String(180))
+    prompt: Mapped[str] = mapped_column(Text)
+    created_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), default=utcnow)
