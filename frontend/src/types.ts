@@ -4,3 +4,5 @@ export type Provider={id:number;slug:string;name:string;description:string;docs_
 export type Workflow={id:number;slug:string;name:string;description:string;category:string;difficulty:string;steps:string[]}
 
 export type SavedPrompt={id:number;title:string;prompt:string;owner_key:string}
+
+export type SavedPromptVersion={id:number;prompt_id:number;title:string;prompt:string;created_at:string}
