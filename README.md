@@ -103,9 +103,24 @@ Vercel can host the React frontend, but its serverless filesystem is ephemeral. 
 
 The current Vercel deployment is a frontend deployment only. To make a public multi-user deployment persistent, the backend must run on a host with a persistent disk (or use a managed database). Do not point a public Vercel frontend at `localhost`; localhost means the visitor's own computer.
 
-## Optional AI execution
+## Live AI execution
 
-Set `OPENAI_API_KEY` and `OPENAI_MODEL` in `backend/.env`. The key is read by the backend only and must never be placed in a `VITE_*` frontend variable. Without a key, the local command catalogue and prompt builder remain usable.
+The Prompt Builder includes an execution panel for **Ollama (local)** and **OpenAI (hosted API)**. Requests are sent from the browser to FastAPI; provider credentials and local endpoint configuration stay on the backend.
+
+### Ollama — local and private
+
+1. Install Ollama from [ollama.com](https://ollama.com/) on the same machine running FastAPI.
+2. In a terminal, run `ollama pull llama3.2` (or download another model supported by your hardware).
+3. Set `OLLAMA_BASE_URL=http://127.0.0.1:11434` and `OLLAMA_MODEL=llama3.2` in `backend/.env`.
+4. Restart FastAPI, open SatyOne Prompt Builder, generate a prompt, select Ollama and click **Run with selected AI provider**.
+
+Check `GET /api/v1/ai/status` or `http://127.0.0.1:8000/docs` to inspect configured provider availability. Model downloads can be several GB; hardware requirements vary. Keep Ollama bound to localhost and do not expose its unauthenticated API publicly.
+
+### OpenAI — hosted API
+
+Set `OPENAI_API_KEY` and `OPENAI_MODEL` in `backend/.env`, restart FastAPI, select OpenAI in the builder and execute. API usage may incur charges. The key is read by the backend only and must never be placed in a `VITE_*` frontend variable.
+
+`PROVIDER_TIMEOUT_SECONDS` controls the server-side request timeout (default 120). Only the explicit `ollama` and `openai` provider IDs are accepted. The backend returns the model output and execution duration; it does not execute arbitrary tools or external actions.
 
 ## Checks
 
