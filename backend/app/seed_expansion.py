@@ -241,3 +241,46 @@ def seed_qa_specialist_commands(db):
             ))
             created += 1
     return created
+
+
+# Advanced operating patterns across all 32 domains: 32 x 12 = 384 commands.
+ADVANCED_PATTERNS = [
+    ("discovery", "Discovery & Intake", "DISCOVERY", """Map stakeholders, user needs, current state, pain points, evidence, constraints, unknowns and decisions."""),
+    ("implementation", "Implementation Playbook", "IMPLEMENTATION", """Create phased tasks, prerequisites, dependencies, owners, checkpoints, rollout, rollback and completion evidence."""),
+    ("troubleshooting", "Troubleshooting Guide", "TROUBLESHOOT", """Map symptoms to likely causes, safe checks, decision branches, evidence, remediation, escalation and prevention."""),
+    ("optimization", "Optimization Review", "OPTIMIZE", """Establish baseline, identify bottlenecks, compare options, estimate trade-offs, prioritize by impact/effort and define measurement."""),
+    ("documentation", "Technical Documentation", "DOCUMENT", """Document overview, audience, prerequisites, process, setup, numbered usage, examples, configuration, troubleshooting and ownership."""),
+    ("enablement", "Enablement & Training Kit", "ENABLE", """Define learner profiles, objectives, prerequisites, modules, worked examples, exercises, assessment rubric and reinforcement."""),
+    ("scenario", "Scenario & Edge-Case Library", "SCENARIOS", """Generate normal, alternate, negative, boundary, exception, recovery and misuse scenarios with expected behavior and verification."""),
+    ("governance", "Governance & Controls", "GOVERN", """Define decision rights, ownership, policies, approvals, access, evidence, exceptions, audit trail, reviews and escalation."""),
+    ("migration", "Migration & Rollout Plan", "MIGRATE", """Inventory current state, map source to target, define compatibility, data validation, staged rollout, parallel run, rollback and success gates."""),
+    ("vendor", "Vendor & Tool Evaluation", "VENDOR", """Define weighted requirements, mandatory criteria, evidence, security/privacy review, integration fit, total cost, lock-in, support and POC acceptance tests."""),
+    ("improvement", "Continuous Improvement Cycle", "IMPROVE", """Establish baseline, collect feedback, identify root causes, prioritize experiments, measure outcomes and institutionalize improvements."""),
+    ("decision-record", "Decision Record", "ADR", """State context, decision drivers, options, chosen approach, rejected alternatives, consequences, risks, assumptions, owner and revisit triggers."""),
+]
+
+def seed_advanced_commands(db):
+    created = 0
+    for domain_slug, domain_name, description, icon in DOMAINS:
+        category = db.query(Category).filter_by(slug=domain_slug).first()
+        if not category:
+            category = Category(slug=domain_slug, name=domain_name, description=description, icon=icon)
+            db.add(category); db.flush()
+        for key, label, syntax_key, focus in ADVANCED_PATTERNS:
+            slug = f"{domain_slug}-advanced-{key}"
+            if db.query(Command.id).filter_by(slug=slug).first(): continue
+            detail = (f"Act as a principal {domain_name.lower()} practitioner. {focus}\\n\\n"
+                "Execution protocol: define objective and measurable outcomes; inventory inputs, stakeholders, dependencies and constraints; "
+                "separate verified facts, user claims, assumptions and estimates; define scope and exclusions; provide phased actions, "
+                "decision branches, responsible roles and artifacts; include normal, negative, boundary, exception and recovery cases; "
+                "identify risks, controls, failure signals, mitigation and escalation; define measurable acceptance criteria and evidence; "
+                "finish with a prioritized backlog and next steps. Never fabricate evidence, sources, approvals, metrics or completed actions.")
+            db.add(Command(slug=slug, name=f"{domain_name}: Advanced {label}",
+                syntax=f"/{_slug(domain_slug).replace('-', '_').upper()}_ADV_{syntax_key}",
+                description=f"Advanced {label.lower()} playbook for {domain_name.lower()} teams.",
+                instruction_template=detail, example_input=f"Create an advanced {label.lower()} for a {domain_name.lower()} initiative.",
+                example_output=f"Decision-ready {label.lower()} with procedures, examples, edge cases, controls and acceptance gates.",
+                difficulty="advanced", status="reviewed", tags=[domain_slug,key,"advanced","delivery","governance"],
+                limitations="Reusable prompt template. Validate against current evidence, organizational policy, actual tools and applicable standards.", category_id=category.id))
+            created += 1
+    return created
