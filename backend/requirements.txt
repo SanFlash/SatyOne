@@ -1,10 +1,1 @@
-fastapi==0.115.12
-uvicorn[standard]==0.34.2
-sqlalchemy==2.0.40
-pydantic==2.11.4
-pydantic-settings==2.9.1
-python-dotenv==1.1.0
-psycopg[binary]==3.2.9
-pytest==8.3.5
-httpx==0.28.1
-openai==1.78.1
+fastapi==0.115.12\nuvicorn[standard]==0.34.2\nsqlalchemy==2.0.40\npydantic==2.11.4\npydantic-settings==2.9.1\npython-dotenv==1.1.0\npytest==8.3.5\nhttpx==0.28.1\nopenai==1.78.1\n
