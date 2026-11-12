@@ -61,6 +61,12 @@ To back up the database, stop the API and copy `backend/data/satyone.db` to a sa
 
 To rebuild the starter database from scratch, stop the API, back up the database, delete `backend/data/satyone.db`, and run `python -m app.init_db` from the `backend` directory. This deletes locally saved prompts too.
 
+## Cross-industry role library
+
+SatyOne is designed as a cross-industry prompt and workflow workspace, not a QA-only command tool. Its command catalogue includes software and QA, business strategy, project management, finance and accounting, marketing and sales, HR and recruiting, education, healthcare administration and clinician-reviewed patient education, legal operations and compliance drafting, science and research, engineering and manufacturing, design and media, hospitality and travel, public sector and nonprofit work, real estate and construction, customer support, supply chain and logistics, and personal productivity.
+
+Each role template is intended to provide a useful starting point with a purpose, detailed instruction, example input, expected output, tags and professional limitations. The catalogue is extensible: add new role categories and command templates as real user needs emerge. No finite catalogue can enumerate every occupation or jurisdiction. For regulated or safety-critical work, prompts are organizational aids only and do not replace qualified professional judgment, applicable standards, or legal review.
+
 ## Browser-only offline workspace
 
 The frontend now includes a bundled local command catalogue and an offline prompt builder. If the API is unreachable (including on a frontend-only Vercel deployment), Command Explorer, search/filtering and prompt generation continue to work without starting FastAPI.
