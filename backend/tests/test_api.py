@@ -3,6 +3,10 @@ from uuid import uuid4
 from fastapi.testclient import TestClient
 from app.main import app
 
+// Enter the lifespan once so CI creates tables and seeds the catalogue before requests.
+with TestClient(app):
+    pass
+
 client = TestClient(app)
 
 
