@@ -16,7 +16,7 @@ def test_health_uses_local_sqlite():
 def test_commands_are_seeded():
     response = client.get("/api/v1/commands")
     assert response.status_code == 200
-    assert len(response.json()) >= 20
+    assert len(client.get("/api/v1/commands?limit=1000").json()) >= 600
     slugs = {item["slug"] for item in response.json()}
     assert {"agent-plan", "research-plan", "privacy-review", "a11y-audit"} <= slugs
 
@@ -31,11 +31,11 @@ def test_prompt_builder_uses_selected_command():
         "command_slugs": ["testcase"],
     })
     assert response.status_code == 200
-    assert "OBJECTIVE" in response.json()["prompt"]
+    assert "MISSION AND SUCCESS OUTCOME" in response.json()["prompt"]
     assert "/TESTCASE" in response.json()["selected_commands"]
     prompt = response.json()["prompt"]
-    assert "SAFETY, PRIVACY AND AUTHORIZATION" in prompt
-    assert "Do not fabricate citations" in prompt
+    assert "RISK, ETHICS, PRIVACY AND AUTHORIZATION" in prompt
+    assert "Never fabricate data, requirements, citations" in prompt
 
 
 def test_saved_prompt_round_trip():
@@ -104,3 +104,30 @@ def test_ai_status_does_not_expose_secrets():
     body = response.json()
     assert {item["id"] for item in body["providers"]} == {"ollama", "openai"}
     assert all("api_key" not in item and "secret" not in item for item in body["providers"])
+
+
+def test_expanded_command_catalogue_exceeds_600_and_is_unique():
+    response = client.get("/api/v1/commands?limit=1000")
+    assert response.status_code == 200
+    items = response.json()
+    assert len(items) >= 600
+    assert len({item["slug"] for item in items}) == len(items)
+    assert len({item["syntax"] for item in items}) == len(items)
+    assert any(item["category"]["slug"] == "finance-accounting" for item in items)
+    assert any(item["category"]["slug"] == "healthcare-admin" for item in items)
+
+
+def test_prompt_builder_produces_detailed_structured_brief():
+    response = client.post("/api/v1/prompt-builder", json={
+        "objective": "Create a launch readiness plan for a new customer portal",
+        "audience": "Product and engineering leadership",
+        "tone": "clear and decisive",
+        "output_format": "implementation brief with tables",
+        "constraints": ["Include rollback criteria"],
+        "command_slugs": ["business-strategy-roadmap"],
+    })
+    assert response.status_code == 200
+    prompt = response.json()["prompt"]
+    for heading in ["ROLE, SENIORITY", "MISSION AND SUCCESS", "CONTEXT, INPUTS", "SCOPE AND BOUNDARIES", "EXECUTION METHOD", "REQUIRED DELIVERABLE", "QUALITY, VALIDATION", "FINAL SELF-REVIEW"]:
+        assert heading in prompt
+    assert "Include rollback criteria" in prompt
