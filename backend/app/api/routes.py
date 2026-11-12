@@ -2,8 +2,8 @@ from fastapi import APIRouter, Depends, HTTPException, Query
 from sqlalchemy import or_
 from sqlalchemy.orm import Session, joinedload
 from app.db import get_db
-from app.models import Category, Command, Provider, Workflow, SavedPrompt
-from app.schemas import PromptBuildIn, PromptBuildOut, SavedPromptIn, SavedPromptOut
+from app.models import Category, Command, Provider, Workflow, SavedPrompt, SavedPromptVersion
+from app.schemas import PromptBuildIn, PromptBuildOut, SavedPromptIn, SavedPromptOut, SavedPromptUpdateIn, SavedPromptVersionOut
 from app.services.prompt_builder import build_prompt
 from app.providers.openai_adapter import OpenAIAdapter
 
@@ -67,16 +67,37 @@ def save_prompt(payload: SavedPromptIn, db: Session = Depends(get_db)):
 @router.get("/saved-prompts", response_model=list[SavedPromptOut])
 def get_saved_prompts(
     owner_key: str = Query(default="local-demo", min_length=1, max_length=120),
+    q: str | None = Query(default=None, max_length=180),
     limit: int = Query(default=100, ge=1, le=250),
     db: Session = Depends(get_db),
 ):
-    return (
-        db.query(SavedPrompt)
-        .filter_by(owner_key=owner_key)
-        .order_by(SavedPrompt.created_at.desc())
-        .limit(limit)
-        .all()
-    )
+    query = db.query(SavedPrompt).filter_by(owner_key=owner_key)
+    if q and q.strip():
+        term = f"%{q.strip()}%"
+        query = query.filter(or_(SavedPrompt.title.ilike(term), SavedPrompt.prompt.ilike(term)))
+    return query.order_by(SavedPrompt.created_at.desc()).limit(limit).all()
+
+
+@router.put("/saved-prompts/{prompt_id}", response_model=SavedPromptOut)
+def update_saved_prompt(prompt_id: int, payload: SavedPromptUpdateIn, db: Session = Depends(get_db)):
+    item = db.query(SavedPrompt).filter_by(id=prompt_id, owner_key=payload.owner_key).first()
+    if not item:
+        raise HTTPException(status_code=404, detail="Saved prompt not found")
+    db.add(SavedPromptVersion(prompt_id=item.id, title=item.title, prompt=item.prompt))
+    item.title = payload.title.strip()
+    item.prompt = payload.prompt
+    db.commit()
+    db.refresh(item)
+    return item
+
+
+@router.get("/saved-prompts/{prompt_id}/versions", response_model=list[SavedPromptVersionOut])
+def get_saved_prompt_versions(prompt_id: int, owner_key: str = Query(default="local-demo", min_length=1, max_length=120), db: Session = Depends(get_db)):
+    item = db.query(SavedPrompt).filter_by(id=prompt_id, owner_key=owner_key).first()
+    if not item:
+        raise HTTPException(status_code=404, detail="Saved prompt not found")
+    return db.query(SavedPromptVersion).filter_by(prompt_id=prompt_id).order_by(SavedPromptVersion.created_at.desc()).all()
+
 
 @router.delete("/saved-prompts/{prompt_id}")
 def delete_saved_prompt(prompt_id: int, owner_key: str = Query(default="local-demo"), db: Session = Depends(get_db)):
@@ -86,6 +107,7 @@ def delete_saved_prompt(prompt_id: int, owner_key: str = Query(default="local-de
     db.delete(item)
     db.commit()
     return {"deleted": True, "id": prompt_id}
+
 
 @router.post("/execute/openai")
 async def execute_openai(payload: PromptBuildIn, db: Session = Depends(get_db)):
