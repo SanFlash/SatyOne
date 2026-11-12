@@ -14,9 +14,9 @@ def test_health_uses_local_sqlite():
 
 
 def test_commands_are_seeded():
-    response = client.get("/api/v1/commands")
+    response = client.get("/api/v1/commands?limit=1000")
     assert response.status_code == 200
-    assert len(client.get("/api/v1/commands?limit=1000").json()) >= 600
+    assert len(response.json()) >= 680
     slugs = {item["slug"] for item in response.json()}
     assert {"agent-plan", "research-plan", "privacy-review", "a11y-audit"} <= slugs
 
@@ -131,3 +131,18 @@ def test_prompt_builder_produces_detailed_structured_brief():
     for heading in ["ROLE, SENIORITY", "MISSION AND SUCCESS", "CONTEXT, INPUTS", "SCOPE AND BOUNDARIES", "EXECUTION METHOD", "REQUIRED DELIVERABLE", "QUALITY, VALIDATION", "FINAL SELF-REVIEW"]:
         assert heading in prompt
     assert "Include rollback criteria" in prompt
+
+
+def test_qa_and_qa_automation_command_packs_are_available():
+    response = client.get("/api/v1/commands?limit=1000")
+    assert response.status_code == 200
+    items = response.json()
+    qa = [item for item in items if item["category"]["slug"] == "qa"]
+    automation = [item for item in items if item["category"]["slug"] == "qa-automation"]
+    assert len(qa) >= 40
+    assert len(automation) >= 40
+    slugs = {item["slug"] for item in items}
+    assert "qa-specialist-requirements-analysis" in slugs
+    assert "qa-automation-specialist-playwright-framework" in slugs
+    assert "qa-automation-specialist-appium-ios" in slugs
+    assert all(len(item["instruction_template"]) > 400 for item in qa + automation)
