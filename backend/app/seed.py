@@ -1,5 +1,6 @@
 from sqlalchemy.orm import Session
 from app.models import Category, Command, Provider, Workflow
+from app.seed_expansion import seed_expanded_commands
 
 CATALOG=[
 ("general","General Intelligence","Explain, reason, summarize and compare.","brain",[
@@ -295,4 +296,5 @@ def seed_catalog(db:Session):
     for slug,name,desc,category,difficulty,steps in WORKFLOWS:
         if not db.query(Workflow).filter_by(slug=slug).first():
             db.add(Workflow(slug=slug,name=name,description=desc,category=category,difficulty=difficulty,steps=steps))
+    seed_expanded_commands(db)
     db.commit()
