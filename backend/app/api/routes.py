@@ -18,7 +18,7 @@ def list_commands(
     q: str | None = None,
     category: str | None = None,
     difficulty: str | None = None,
-    limit: int = Query(default=100, ge=1, le=250),
+    limit: int = Query(default=250, ge=1, le=500),
     offset: int = Query(default=0, ge=0),
     db: Session = Depends(get_db),
 ):
