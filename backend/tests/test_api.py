@@ -31,11 +31,11 @@ def test_prompt_builder_uses_selected_command():
         "command_slugs": ["testcase"],
     })
     assert response.status_code == 200
-    assert "MISSION AND SUCCESS OUTCOME" in response.json()["prompt"]
+    assert "OBJECTIVE AND SUCCESS DEFINITION" in response.json()["prompt"]
     assert "/TESTCASE" in response.json()["selected_commands"]
     prompt = response.json()["prompt"]
-    assert "RISK, ETHICS, PRIVACY AND AUTHORIZATION" in prompt
-    assert "Never fabricate data, requirements, citations" in prompt
+    assert "RISK, SECURITY, PRIVACY AND COMPLIANCE" in prompt
+    assert "Never invent sources, facts, execution results" in prompt
 
 
 def test_saved_prompt_round_trip():
