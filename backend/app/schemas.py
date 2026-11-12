@@ -26,7 +26,7 @@ class PromptBuildOut(BaseModel):
 class SavedPromptIn(BaseModel):
     title:str=Field(min_length=1,max_length=180)
     prompt:str=Field(min_length=1,max_length=20000)
-    owner_key:str="local-demo"
+    owner_key:str=Field(default="local-demo", min_length=1, max_length=120)
 
 class SavedPromptOut(BaseModel):
     id:int; title:str; prompt:str; owner_key:str
