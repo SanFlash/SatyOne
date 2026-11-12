@@ -95,3 +95,21 @@ GitHub Actions runs backend tests and the frontend production build on pushes an
 - Provider directory entries are references, not claims of a live integration.
 - The starter app is a local single-user workspace. Do not expose its unauthenticated saved-prompt endpoints to the public internet.
 - Before enabling public accounts, add authentication, authorization, request limits, database migrations, backups and privacy controls.
+
+## Product scope, legal and security governance
+
+SatyOne is being expanded as a modular AI command-intelligence platform. Its intended knowledge domains include AI fundamentals, prompt engineering, provider/model comparison, software engineering, QA and automation, data analysis, research, creative workflows, defensive security, privacy, integrations and bounded agent workflows.
+
+The product deliberately distinguishes educational content and prompt templates from verified integrations and production-supported capabilities. It does not promise universal provider compatibility or guarantee generated output.
+
+Read the governance specifications:
+- [Product scope, capability map and boundaries](docs/PRODUCT_SCOPE_AND_CAPABILITIES.md)
+- [Legal and responsible-use policy](docs/LEGAL_AND_RESPONSIBLE_USE.md)
+- [Security, privacy and AI governance baseline](docs/SECURITY_PRIVACY_GOVERNANCE.md)
+- [Product roadmap and release gates](docs/ROADMAP.md)
+
+These documents are engineering and policy baselines, not legal advice or a certification of compliance. Before public launch, obtain qualified legal review for the operator's jurisdictions, data flows, provider contracts and actual feature set. India-facing operations must assess the phased commencement of the DPDP Act and Rules and applicable CERT-In directions.
+
+## Current release boundary
+
+The current codebase remains a local-first single-user starter. The documentation describes the intended product scope and release gates; it does not mean every listed capability has already been implemented. Public multi-user launch requires authentication, object-level authorization, tenant isolation, abuse controls, privacy workflows, persistent hosting, tested backups and security/legal review.
