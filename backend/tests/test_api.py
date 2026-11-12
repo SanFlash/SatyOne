@@ -18,7 +18,7 @@ def test_health_uses_local_sqlite():
 
 
 def test_commands_are_seeded():
-    response = client.get("/api/v1/commands?limit=1000")
+    response = client.get("/api/v1/commands?limit=1500")
     assert response.status_code == 200
     assert len(response.json()) >= 1100
     slugs = {item["slug"] for item in response.json()}
@@ -111,7 +111,7 @@ def test_ai_status_does_not_expose_secrets():
 
 
 def test_expanded_command_catalogue_exceeds_600_and_is_unique():
-    response = client.get("/api/v1/commands?limit=1000")
+    response = client.get("/api/v1/commands?limit=1500")
     assert response.status_code == 200
     items = response.json()
     assert len(items) >= 1100
@@ -138,7 +138,7 @@ def test_prompt_builder_produces_detailed_structured_brief():
 
 
 def test_qa_and_qa_automation_command_packs_are_available():
-    response = client.get("/api/v1/commands?limit=1000")
+    response = client.get("/api/v1/commands?limit=1500")
     assert response.status_code == 200
     items = response.json()
     qa = [item for item in items if item["category"]["slug"] == "qa"]
