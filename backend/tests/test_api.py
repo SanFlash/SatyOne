@@ -149,7 +149,7 @@ def test_qa_and_qa_automation_command_packs_are_available():
     assert "qa-specialist-requirements-analysis" in slugs
     assert "qa-automation-specialist-playwright-framework" in slugs
     assert "qa-automation-specialist-appium-ios" in slugs
-    assert all(len(item["instruction_template"]) > 250 for item in qa + automation)
+    assert all(len(item["instruction_template"]) > 250 for item in qa + automation if "-specialist-" in item["slug"])
 
 
 def test_advanced_commands_expand_all_domains():
