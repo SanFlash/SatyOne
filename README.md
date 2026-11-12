@@ -61,6 +61,14 @@ To back up the database, stop the API and copy `backend/data/satyone.db` to a sa
 
 To rebuild the starter database from scratch, stop the API, back up the database, delete `backend/data/satyone.db`, and run `python -m app.init_db` from the `backend` directory. This deletes locally saved prompts too.
 
+## Browser-only offline workspace
+
+The frontend now includes a bundled local command catalogue and an offline prompt builder. If the API is unreachable (including on a frontend-only Vercel deployment), Command Explorer, search/filtering and prompt generation continue to work without starting FastAPI.
+
+Saved prompts created in this mode are stored in the current browser's local storage. They are not synchronized across browsers or devices and can be cleared when site data is removed. When the FastAPI backend is available, the app uses the backend SQLite database instead. The browser-only mode does not execute AI model requests; it creates reusable prompt instructions.
+
+The Vercel rewrite currently serves the static React application and does not host the FastAPI backend. For server-backed prompt history, shared data and AI execution, deploy the FastAPI backend separately and configure `VITE_API_BASE_URL` to its HTTPS API base URL. Use a persistent managed database for public hosting; do not use ephemeral serverless SQLite for durable user data.
+
 ## Vercel deployment — important limitation
 
 Vercel can host the React frontend, but its serverless filesystem is ephemeral. A SQLite file written by a Vercel function is not a durable shared database and can disappear between invocations or instances. Therefore this repository's local SQLite mode is intended for a local desktop/development server, not as a persistent database behind a public Vercel deployment.
