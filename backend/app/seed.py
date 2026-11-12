@@ -43,7 +43,18 @@ CATALOG.extend([
 ("a11y-audit","Accessibility Audit","/A11Y_AUDIT","Plan an accessibility review.","Audit {interface} against applicable accessibility guidance. Cover keyboard operation, focus, semantics, labels, contrast, zoom/reflow, motion, errors, screen readers and manual testing. Distinguish automated findings from human verification.","Review a registration flow.","An actionable accessibility test plan.","intermediate",["accessibility","wcag","ux"]),
 ("ux-review","UX Heuristic Review","/UX_REVIEW","Review a user experience systematically.","Review {journey} for usability. Assess clarity, feedback, consistency, error prevention, recovery, cognitive load, mobile behavior and trust. Give evidence-based findings with severity and recommended changes.","Review onboarding.","A prioritized UX report.","intermediate",["ux","product"])]),
 ])
-\nPROVIDERS.extend([
+\n
+
+PROVIDERS=[
+("openai","OpenAI","Official API integration can be enabled with a server-side API key.","https://platform.openai.com/docs","directory"),
+("anthropic","Anthropic Claude","Directory entry; adapter integration is a future module.","https://docs.anthropic.com/","directory"),
+("google","Google Gemini","Directory entry; adapter integration is a future module.","https://ai.google.dev/gemini-api/docs","directory"),
+("microsoft","Microsoft Copilot","Availability depends on product/API.","https://learn.microsoft.com/","directory"),
+("perplexity","Perplexity","Verify API capabilities in official documentation.","https://docs.perplexity.ai/","directory"),
+("deepseek","DeepSeek","Directory entry; adapter integration is a future module.","https://api-docs.deepseek.com/","directory"),
+("xai","xAI Grok","Directory entry; adapter integration is a future module.","https://docs.x.ai/","directory"),
+("mistral","Mistral","Directory entry; adapter integration is a future module.","https://docs.mistral.ai/","directory")]
+PROVIDERS.extend([
 ("ollama","Ollama","Free open-source local model runner; hardware and model license requirements apply.","https://ollama.com/","free and open source"),
 ("llama-cpp","llama.cpp","Open-source local inference engine for supported model formats.","https://github.com/ggml-org/llama.cpp","free and open source"),
 ("open-webui","Open WebUI","Open-source self-hosted AI interface; model/API costs are separate.","https://github.com/open-webui/open-webui","free and open source"),
@@ -85,15 +96,6 @@ CATALOG.extend([
 ("activepieces","Activepieces","Automation platform with open-source core and self-host option.","https://www.activepieces.com/docs","open source core")
 ])
 
-PROVIDERS=[
-("openai","OpenAI","Official API integration can be enabled with a server-side API key.","https://platform.openai.com/docs","directory"),
-("anthropic","Anthropic Claude","Directory entry; adapter integration is a future module.","https://docs.anthropic.com/","directory"),
-("google","Google Gemini","Directory entry; adapter integration is a future module.","https://ai.google.dev/gemini-api/docs","directory"),
-("microsoft","Microsoft Copilot","Availability depends on product/API.","https://learn.microsoft.com/","directory"),
-("perplexity","Perplexity","Verify API capabilities in official documentation.","https://docs.perplexity.ai/","directory"),
-("deepseek","DeepSeek","Directory entry; adapter integration is a future module.","https://api-docs.deepseek.com/","directory"),
-("xai","xAI Grok","Directory entry; adapter integration is a future module.","https://docs.x.ai/","directory"),
-("mistral","Mistral","Directory entry; adapter integration is a future module.","https://docs.mistral.ai/","directory")]
 WORKFLOWS=[
 ("qa-web-audit","Web QA Audit","A structured, authorized workflow for assessing a website's quality.","quality-assurance","intermediate",["Clarify scope and authorization","Map critical user journeys","Design functional and responsive checks","Run approved tests and capture evidence","Prioritize defects and produce a report"]),
 ("new-feature-build","Build a New Feature","Plan and implement a software feature with quality gates.","development","intermediate",["Clarify requirements and acceptance criteria","Design API and data model","Implement the smallest vertical slice","Add automated tests","Review security, accessibility and deployment"]),
