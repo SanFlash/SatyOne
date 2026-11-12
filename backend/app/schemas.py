@@ -1,3 +1,4 @@
+from datetime import datetime
 from pydantic import BaseModel, ConfigDict, Field
 
 class CategoryOut(BaseModel):
@@ -43,5 +44,5 @@ class SavedPromptVersionOut(BaseModel):
     prompt_id: int
     title: str
     prompt: str
-    created_at: object
+    created_at: datetime
     model_config = ConfigDict(from_attributes=True)
