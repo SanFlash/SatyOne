@@ -91,3 +91,16 @@ def test_command_difficulty_filter():
     assert response.status_code == 200
     assert response.json()
     assert all(item["difficulty"] == "advanced" for item in response.json())
+
+
+def test_unknown_ai_provider_is_rejected():
+    response = client.post("/api/v1/execute/unknown", json={"prompt": "Say hello"})
+    assert response.status_code == 404
+
+
+def test_ai_status_does_not_expose_secrets():
+    response = client.get("/api/v1/ai/status")
+    assert response.status_code == 200
+    body = response.json()
+    assert {item["id"] for item in body["providers"]} == {"ollama", "openai"}
+    assert all("api_key" not in item and "secret" not in item for item in body["providers"])
