@@ -83,7 +83,7 @@ const expandedPatterns=[
 ['launch','Launch Readiness Review','LAUNCH','Assess launch readiness for {subject}. Review scope, ownership, dependencies, support, security, privacy, accessibility, monitoring, rollback and go/no-go criteria.']
 ] as const
 for(const [slug,name] of expandedDomains){if(!localCategories.some(c=>c.slug===slug))localCategories.push({id:localCategories.length+1,slug,name,description:name+' professional command patterns',icon:'command'})}
-for(const [domain,name] of expandedDomains){const category=localCategories.find(c=>c.slug===domain)!;for(const [key,label,code,template] of expandedPatterns){const slug=domain+'-'+key;if(localCommands.some(c=>c.slug===slug))continue;localCommands.push({id:localCommands.length+1,slug,name:name+': '+label,syntax:'/ '+domain.replace(/-/g,'_').toUpperCase()+'_'+code,description:label+' tailored to '+name.toLowerCase()+'.',instruction_template:'Act as a senior '+name.toLowerCase()+' specialist. '+template+' Execution standard: state the outcome, scope, inputs, assumptions and exclusions; sequence the work into practical steps; explain rationale and trade-offs; provide examples, templates or tables; identify dependencies, edge cases and failure modes; define evidence and measurable acceptance criteria; finish with prioritized next actions. Never fabricate sources, metrics, approvals or completed actions.',example_input:'Prepare a '+label.toLowerCase()+' for a '+name.toLowerCase()+' team.',example_output:'A structured '+label.toLowerCase()+' with scope, steps, evidence, risks and success criteria.',difficulty:['architecture','audit','risk','incident','contract','forecast'].includes(key)?'advanced':'intermediate',status:'reviewed',tags:[domain,key,'cross-industry','professional'],limitations:'Reusable prompt template only. Validate against current evidence, local rules and qualified professional judgment.',category})}}
+for(const [domain,name] of expandedDomains){const category=localCategories.find(c=>c.slug===domain)!;for(const [key,label,code,template] of expandedPatterns){const slug=domain+'-'+key;if(localCommands.some(c=>c.slug===slug))continue;localCommands.push({id:localCommands.length+1,slug,name:name+': '+label,syntax:'/'+domain.replace(/-/g,'_').toUpperCase()+'_'+code,description:label+' tailored to '+name.toLowerCase()+'.',instruction_template:'Act as a senior '+name.toLowerCase()+' specialist. '+template+' Execution standard: state the outcome, scope, inputs, assumptions and exclusions; sequence the work into practical steps; explain rationale and trade-offs; provide examples, templates or tables; identify dependencies, edge cases and failure modes; define evidence and measurable acceptance criteria; finish with prioritized next actions. Never fabricate sources, metrics, approvals or completed actions.',example_input:'Prepare a '+label.toLowerCase()+' for a '+name.toLowerCase()+' team.',example_output:'A structured '+label.toLowerCase()+' with scope, steps, evidence, risks and success criteria.',difficulty:['architecture','audit','risk','incident','contract','forecast'].includes(key)?'advanced':'intermediate',status:'reviewed',tags:[domain,key,'cross-industry','professional'],limitations:'Reusable prompt template only. Validate against current evidence, local rules and qualified professional judgment.',category})}}
 
 
 const roleCategories=[
@@ -302,4 +302,32 @@ export const filterLocalCommands=(q:string,category:string,difficulty:string)=>{
 const KEY='satyone.saved-prompts.v1'
 export const readLocalSaved=():SavedPrompt[]=>{try{return JSON.parse(localStorage.getItem(KEY)||'[]')}catch{return []}}
 export const writeLocalSaved=(items:SavedPrompt[])=>localStorage.setItem(KEY,JSON.stringify(items))
-export const makeLocalPrompt=(objective:string,audience:string,tone:string,format:string,constraints:string[],commands:Command[])=>['SATYONE — STRUCTURED AI INSTRUCTION','ROLE: Be accurate, transparent and appropriately cautious.','OBJECTIVE:\n'+objective.trim(),'AUDIENCE: '+audience,'TONE: '+tone,'OUTPUT FORMAT: '+format,'WORKING METHOD:\n- Clarify ambiguity.\n- Separate facts, assumptions and estimates.\n- Explain trade-offs and failure cases.\n- Include validation for technical work.\n- Never claim access or actions that did not occur.',...commands.map(c=>'INSTRUCTION PATTERN — '+c.name+' ('+c.syntax+'):\n'+c.instruction_template),...(constraints.length?['USER CONSTRAINTS:\n'+constraints.map(x=>'- '+x).join('\n')]:[]),'SAFETY AND PRIVACY:\n- Respect authorization and privacy.\n- Do not expose secrets or personal data.\n- Require approval for consequential external actions.'].join('\n\n')
+export const makeLocalPrompt=(objective:string,audience:string,tone:string,format:string,constraints:string[],commands:Command[])=>[
+'# SATYONE | PROFESSIONAL EXECUTION BRIEF',
+'## 1. ROLE AND OPERATING STANDARD',
+'Act as a senior cross-functional specialist with practical experience relevant to the objective. Produce work that can be reviewed and acted upon; do not stop at generic advice.',
+'## 2. MISSION AND SUCCESS OUTCOME',
+objective.trim(),
+'## 3. AUDIENCE AND COMMUNICATION',
+'Primary audience: '+audience+'\\nTone: '+tone+'\\nRequired format: '+format+'. Explain specialist terms where needed.',
+'## 4. CONTEXT, INPUTS AND ASSUMPTIONS',
+'Use supplied context as the source of truth. Identify required inputs, evidence, constraints and dependencies. Explicitly label assumptions. Ask a focused clarification only when a missing fact materially changes the result. Never fabricate facts, data, citations or completed actions.',
+'## 5. SCOPE AND BOUNDARIES',
+'Define included work, exclusions, stakeholders, systems, time period and deliverables. Do not expand scope silently.',
+'## 6. EXECUTION METHOD',
+'1. Decompose the objective into workstreams and sequence by dependency.\\n2. For each workstream state outcome, actions, inputs, owner role, method and completion evidence.\\n3. Produce the actual requested draft, plan, specification, analysis, code or template where possible.\\n4. Review intermediate work for gaps, contradictions and feasibility.\\n5. Consolidate decisions and next actions.',
+'## 7. REQUIRED DELIVERABLE STRUCTURE',
+'Provide a descriptive title, executive summary, objectives, scope, context, assumptions, detailed approach, numbered actions, examples/templates, dependencies, risks and mitigations, validation evidence, measurable acceptance criteria and prioritized next steps. Use tables for comparisons and registers. Omit irrelevant sections rather than filling them with generic text.',
+'## 8. DEPTH AND SPECIFICITY',
+'Be comprehensive, not padded. Explain why recommendations matter, how to implement them, what good looks like and how to detect failure. Replace vague advice with observable actions. Include realistic examples, edge cases, exceptions and alternative paths.',
+'## 9. QUALITY AND VALIDATION GATES',
+'Define testable acceptance criteria. Check completeness, consistency, calculations, terminology, accessibility and feasibility. Technical work must include positive, negative and boundary tests, security considerations and rollback. Research must include source quality and claim-to-evidence traceability. State what was not independently verified.',
+'## 10. RISK, PRIVACY AND AUTHORIZATION',
+'Apply least privilege and data minimization. Protect confidential information. Require explicit authorization and bounded scope for security testing. Do not perform consequential external actions without explicit approval. Flag regulated or safety-critical matters for qualified professional review.',
+'## 11. RESPONSE RULES',
+'Be direct and candid. Distinguish facts, assumptions, estimates and recommendations. Never pretend to browse, run code, inspect files or access accounts. If blocked, explain the blocker and give a practical alternative.',
+...commands.map((c,i)=>'## SPECIALIST MODULE '+(i+1)+': '+c.name+' ('+c.syntax+')\\nPurpose: '+c.description+'\\nMethod: '+c.instruction_template+'\\nExample input: '+c.example_input+'\\nExpected deliverable: '+c.example_output+'\\nLimitations: '+c.limitations),
+...(constraints.length?['## USER CONSTRAINTS AND NON-NEGOTIABLES\\n'+constraints.map(x=>'- '+x).join('\\n')]:[]),
+'## FINAL SELF-REVIEW',
+'Confirm every requested outcome is addressed, recommendations are actionable, assumptions are visible, acceptance criteria are testable, risks and dependencies are covered, and no source, capability or completed action has been invented. End with highest-priority next steps.'
+].join('\\n\\n')
