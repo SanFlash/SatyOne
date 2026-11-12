@@ -17,3 +17,13 @@ button:focus-visible,a:focus-visible,input:focus-visible,textarea:focus-visible,
 @media(max-width:540px){.toolbar .secondary-btn{width:100%}.results-meta{line-height:1.6}}
 
 .saved-search{height:42px;max-width:560px;display:flex;align-items:center;gap:10px;padding:0 12px;margin:-8px 0 18px;background:#0e1523;border:1px solid #2a344c;border-radius:8px;color:#7e8aa6}.saved-search input{flex:1;min-width:0;background:none;border:0;outline:0;color:#e7eaf4;font-size:12px}.saved-actions{display:flex;align-items:center;gap:13px;flex-wrap:wrap;margin-top:12px}.saved-actions>span{font:9px 'DM Mono';color:#7785a2;margin-right:auto}.version-history{margin-top:15px;padding:13px;border:1px solid #303956;border-radius:8px;background:#0a1020}.version-history>b{font:11px 'Space Grotesk';display:block;margin-bottom:10px}.version-history small{color:#8994ad;font-size:10px}.version-item{border-top:1px solid #202a40;padding:10px 0}.version-item span{font:9px 'DM Mono';color:#8290ad}.version-item p{font-size:10px;color:#aab5cc;line-height:1.5}.version-item .text-btn{font-size:10px}
+
+/* Command Studio and Knowledge Studio */
+.studio-checks{padding-left:20px;color:#aeb9d0;font-size:12px;line-height:2.1}
+.panel input[type=file]{display:block;width:100%;padding:12px;background:#0e1523;border:1px dashed #3a4662;border-radius:8px;color:#aeb9d0;font-size:11px;margin:6px 0 18px}
+.panel input[type=file]::file-selector-button{background:#242d47;color:#d9dff0;border:1px solid #465273;border-radius:6px;padding:8px 12px;margin-right:12px;cursor:pointer}
+.panel select{width:100%;height:42px;margin:6px 0 17px;padding:0 11px;background:#0e1523;border:1px solid #303b55;border-radius:7px;color:#e4e9f5;font-size:12px}
+.panel .objective-input{min-height:150px}
+.panel .constraints-input{min-height:95px}
+.studio-checks li::marker{color:#8e81f7}
+@media(max-width:540px){.panel input[type=file]{font-size:10px}.studio-checks{font-size:11px}}
