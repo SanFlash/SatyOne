@@ -77,7 +77,7 @@ Each role template is intended to provide a useful starting point with a purpose
 
 ### Local model workspace setup
 
-For a private, local-model workflow, install [Ollama](https://ollama.com/) on your own computer, download a model that fits your hardware, then use the Ollama CLI/API according to its official documentation. SatyOne currently provides the directory and setup guidance; it does **not** yet proxy model requests to a local Ollama endpoint. Never expose an unauthenticated local model endpoint to the public internet.
+For a private, local-model workflow, install [Ollama](https://ollama.com/) on the same computer as the FastAPI backend, download a model that fits your hardware and configure `OLLAMA_BASE_URL` and `OLLAMA_MODEL` in `backend/.env`. SatyOne's backend now has an Ollama adapter and the Prompt Builder can send prompts to it. Never expose an unauthenticated local model endpoint to the public internet.
 
 ## Free and open-source tool directory
 
@@ -144,7 +144,7 @@ GitHub Actions runs backend tests and the frontend production build on pushes an
 
 - Slash patterns such as `/DEEPDIVE` are SatyOne prompt macros, not universal commands understood natively by every AI provider.
 - Provider directory entries are references, not claims of a live integration.
-- The starter app is a local single-user workspace. Do not expose its unauthenticated saved-prompt endpoints to the public internet.
+- The starter app is a local single-user workspace. Do not expose its unauthenticated saved-prompt or AI execution endpoints to the public internet. Provider execution has no per-user quotas or billing controls in this release.
 - Before enabling public accounts, add authentication, authorization, request limits, database migrations, backups and privacy controls.
 
 ## Product scope, legal and security governance
