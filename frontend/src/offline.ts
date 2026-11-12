@@ -442,6 +442,5 @@ export const makeLocalPrompt=(objective:string,audience:string,tone:string,forma
 ...(constraints.length?['## USER CONSTRAINTS — NON-NEGOTIABLE\n'+constraints.map(x=>'- '+x).join('\n')]:[]),
 '## FINAL QUALITY GATE\nVerify coverage, factual integrity, completeness, consistency, feasibility, edge cases, privacy, testability and formatting. Identify unresolved issues and prioritize next actions.'
 ].join('\n\n')
-'## FINAL SELF-REVIEW',
 'Confirm every requested outcome is addressed, recommendations are actionable, assumptions are visible, acceptance criteria are testable, risks and dependencies are covered, and no source, capability or completed action has been invented. End with highest-priority next steps.'
 ].join('\n\n')
