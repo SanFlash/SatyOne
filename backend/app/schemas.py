@@ -46,3 +46,14 @@ class SavedPromptVersionOut(BaseModel):
     prompt: str
     created_at: datetime
     model_config = ConfigDict(from_attributes=True)
+
+
+class ExecuteIn(BaseModel):
+    prompt: str = Field(min_length=1, max_length=30000)
+    model: str | None = Field(default=None, max_length=160)
+
+class ExecuteOut(BaseModel):
+    provider: str
+    model: str
+    output: str
+    duration_ms: int
