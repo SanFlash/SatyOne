@@ -297,6 +297,121 @@ export const localProviders:Provider[]=[
 {id:44,slug:'scikit-learn',name:'scikit-learn',description:'Open-source machine learning library for Python.',docs_url:'https://scikit-learn.org/stable/user_guide.html',integration_status:'free and open source'},
 {id:45,slug:'n8n-alternatives',name:'Activepieces',description:'Open-source automation platform with self-hosting option; hosted plans may be paid.',docs_url:'https://www.activepieces.com/docs',integration_status:'open source core'}
 ]
+
+
+// Dedicated QA and QA Automation packs are mirrored here so offline mode has the same coverage.
+
+const qaSpecialistTasks=[
+  ["requirements-analysis","Requirements Analysis","Convert supplied requirements into atomic, testable statements; identify ambiguity, conflicts, dependencies and missing acceptance criteria."],
+  ["test-strategy","Test Strategy","Define test levels, types, scope, exclusions, environments, data, tools, roles, risks, entry/exit criteria and measurable coverage."],
+  ["test-plan","Test Plan","Create a project test plan with objectives, scope, schedule, resources, dependencies, deliverables, risks and sign-off gates."],
+  ["test-scenarios","Test Scenario Design","Derive end-to-end, integration, negative, alternate and exception scenarios from the stated business flows."],
+  ["test-cases","Detailed Test Cases","Write uniquely identified test cases with preconditions, data, numbered steps, expected results, priority and traceability."],
+  ["boundary-value","Boundary Value Analysis","Identify valid and invalid boundaries, adjacent values, inclusive/exclusive limits and representative test data."],
+  ["equivalence-partition","Equivalence Partitioning","Partition inputs into valid and invalid classes and justify the minimum representative tests."],
+  ["decision-table","Decision Table Testing","Model combinations of conditions and expected actions; remove impossible rules and expose missing combinations."],
+  ["state-transition","State Transition Testing","Model states, events, guards, transitions, invalid transitions and state coverage for the feature."],
+  ["pairwise-testing","Pairwise Testing","Identify parameter dimensions and create a risk-aware pairwise coverage set; state combinations intentionally omitted."],
+  ["exploratory-charter","Exploratory Testing Charter","Create time-boxed charters with mission, risks, heuristics, data, observations and session debrief."],
+  ["usability-review","Usability Testing","Evaluate task completion, learnability, feedback, error recovery, accessibility and user friction with evidence."],
+  ["accessibility-testing","Accessibility Testing","Plan keyboard, focus, semantics, labels, contrast, zoom, reduced motion and screen-reader checks; distinguish automated from manual coverage."],
+  ["responsive-testing","Responsive Testing","Build viewport/device coverage for layout, navigation, overflow, touch targets, orientation and content reflow."],
+  ["cross-browser","Cross-Browser Testing","Define browser/OS coverage, rendering risks, feature compatibility, reproducibility and evidence capture."],
+  ["mobile-testing","Mobile Application Testing","Cover install, upgrade, permissions, lifecycle, interruptions, network changes, gestures, device variation and app state."],
+  ["regression-suite","Regression Suite Design","Select regression coverage by change impact, business criticality, defect history, dependencies and execution cost."],
+  ["smoke-sanity","Smoke and Sanity Testing","Define build verification and focused change checks with clear pass/fail gates and escalation rules."],
+  ["integration-testing","Integration Testing","Test service boundaries, contracts, data mapping, retries, timeouts, partial failures and downstream effects."],
+  ["system-testing","System Testing","Build end-to-end system coverage across functional and non-functional requirements and realistic user journeys."],
+  ["uat-planning","UAT Planning","Prepare business scenarios, representative roles/data, acceptance evidence, defect triage and stakeholder sign-off."],
+  ["api-manual-testing","Manual API Testing","Design API checks for methods, status codes, headers, payloads, auth, validation, pagination and error contracts."],
+  ["database-testing","Database Testing","Validate persistence, constraints, relationships, transactions, data integrity, migrations and rollback behavior."],
+  ["sql-validation","SQL Data Validation","Write read-only SQL checks for counts, duplicates, nulls, referential integrity and reconciliation; explain expected results."],
+  ["security-test-planning","Security Test Planning","Create authorized, bounded security checks for authentication, authorization, session handling, input validation and information exposure."],
+  ["performance-test-planning","Performance Test Planning","Define workload, concurrency, ramp-up, duration, percentiles, resource metrics, thresholds and realistic data assumptions."],
+  ["reliability-testing","Reliability and Recovery Testing","Plan resilience checks for service interruption, restart, retry, recovery, data consistency and graceful degradation."],
+  ["data-migration-testing","Data Migration Testing","Compare source and target records, mappings, transformations, totals, rejected rows, reconciliation and rollback evidence."],
+  ["localization-testing","Localization Testing","Check language, date/time, currency, number formats, text expansion, encoding, sorting and locale-specific behavior."],
+  ["installation-upgrade","Installation and Upgrade Testing","Test clean install, upgrade paths, configuration retention, permissions, rollback and uninstall cleanup."],
+  ["defect-report","Defect Report Writing","Create reproducible defects with environment, build, preconditions, steps, actual/expected results, evidence and impact."],
+  ["severity-priority","Severity and Priority Triage","Classify impact and urgency consistently; explain rationale, workaround, affected users and release implications."],
+  ["root-cause-analysis","Root Cause Analysis","Use evidence-based 5 Whys/fishbone analysis; separate trigger, contributing factors and systemic cause."],
+  ["test-metrics","QA Metrics Dashboard","Define execution, pass rate, escaped defects, reopen rate, coverage and cycle time with formulas and interpretation caveats."],
+  ["traceability-matrix","Requirements Traceability Matrix","Map requirements to scenarios, cases, execution results and defects; highlight uncovered and obsolete requirements."],
+  ["release-readiness","Release Readiness Assessment","Evaluate test evidence, open defects, residual risk, environment stability, rollback and explicit go/no-go criteria."],
+  ["test-data-design","Test Data Design","Create privacy-safe representative datasets including valid, invalid, boundary, duplicate and masked records."],
+  ["risk-based-testing","Risk-Based Testing","Rank features by likelihood, impact, exposure, complexity and change; translate ranking into test depth."],
+  ["qa-estimation","QA Estimation","Estimate test design, setup, execution, automation and retest effort using assumptions, ranges and contingency."],
+  ["agile-qa","Agile QA Sprint Planning","Integrate QA into refinement, definition of ready/done, story acceptance, daily collaboration and sprint exit."],
+  ["production-validation","Production Smoke Validation","Prepare safe post-deployment checks, monitoring signals, rollback triggers and evidence without destructive production actions."],
+] as const;
+
+const qaAutomationSpecialistTasks=[
+  ["playwright-framework","Playwright Framework Design","Design a maintainable Playwright framework with fixtures, config, projects, POM, utilities, data and reporting."],
+  ["playwright-locators","Playwright Locator Strategy","Choose resilient role, label, text and test-id locators; avoid brittle XPath and explain strict-mode behavior."],
+  ["playwright-waits","Playwright Synchronization","Use auto-waiting, web-first assertions and event-based waits; remove fixed sleeps and diagnose race conditions."],
+  ["playwright-fixtures","Playwright Fixtures","Design isolated fixtures with clear setup/teardown scope, dependency injection and failure-safe cleanup."],
+  ["playwright-pom","Playwright Page Object Model","Generate typed page objects with encapsulated locators, user-focused actions and assertions in tests."],
+  ["playwright-api","Playwright API Testing","Build APIRequestContext tests for auth, schema, status, headers, negative cases and shared setup."],
+  ["playwright-auth","Playwright Authentication","Create safe storage-state workflows, role-based sessions, expiry checks and secret handling."],
+  ["playwright-network","Playwright Network Mocking","Intercept, modify and fulfill requests for deterministic tests; validate both mocked and real integration paths."],
+  ["playwright-download","Playwright File Download","Automate download events, filename/content checks, temporary paths and cleanup."],
+  ["playwright-upload","Playwright File Upload","Test single/multiple uploads, type/size validation, progress, failure handling and secure fixtures."],
+  ["playwright-frames","Playwright Frames and Dialogs","Handle iframes, alerts, confirms, prompts and popup pages using event-safe patterns."],
+  ["playwright-trace","Playwright Trace Debugging","Configure traces, screenshots, videos and logs; diagnose failures from artifacts without leaking secrets."],
+  ["playwright-parallel","Playwright Parallel Execution","Configure workers, sharding, retries and resource limits while preserving test isolation."],
+  ["playwright-mobile-emulation","Playwright Mobile Emulation","Configure device profiles, viewport, touch, locale, timezone and network conditions; state emulation limits."],
+  ["playwright-accessibility","Playwright Accessibility Automation","Combine automated accessibility scans with keyboard and assistive-technology manual checks; avoid claiming full conformance."],
+  ["playwright-visual","Playwright Visual Regression","Set screenshot baselines, masking, thresholds, deterministic data and review workflow for visual diffs."],
+  ["playwright-ci","Playwright CI Pipeline","Create CI stages for install, browser caching, lint, tests, artifacts, reports and failure diagnostics."],
+  ["playwright-flaky","Flaky Test Diagnosis","Classify flakiness causes across data, timing, environment and concurrency; propose evidence-led fixes."],
+  ["playwright-data","Playwright Test Data Management","Create factories, API seeding, unique data, cleanup and parallel-safe isolation."],
+  ["playwright-tags","Playwright Test Organization","Structure tags, annotations, projects, grep filters, smoke/regression suites and ownership."],
+  ["selenium-framework","Selenium Framework Design","Design Selenium architecture with driver factory, config, waits, page objects, utilities and reporting."],
+  ["selenium-waits","Selenium Wait Strategy","Implement explicit waits for observable conditions; diagnose stale elements, overlays and synchronization failures."],
+  ["selenium-grid","Selenium Grid Execution","Configure remote sessions, browser capabilities, node health, parallel limits and artifact collection."],
+  ["selenium-pom","Selenium Page Object Model","Generate maintainable page objects with stable locators, reusable components and clean test assertions."],
+  ["selenium-js","Selenium JavaScript Automation","Create Node.js Selenium tests with async control, driver lifecycle, assertions and deterministic cleanup."],
+  ["pytest-architecture","Pytest Framework Architecture","Design conftest, fixtures, markers, config, test layers, plugins and reusable utilities."],
+  ["pytest-parametrize","Pytest Parametrization","Create readable parameterized cases with IDs, data sources and failure diagnostics."],
+  ["pytest-fixtures","Pytest Fixture Strategy","Select fixture scopes, dependency ordering, yield teardown and isolation without shared mutable state."],
+  ["pytest-mocking","Pytest Mocking","Use monkeypatch and mocks at correct boundaries; assert interactions without over-mocking implementation details."],
+  ["pytest-coverage","Pytest Coverage Strategy","Measure branch/line coverage and identify meaningful untested behavior; do not equate coverage percentage with quality."],
+  ["api-automation","API Automation Framework","Build reusable API clients, auth helpers, schema validation, contract assertions and environment configuration."],
+  ["requests-api","Python Requests API Tests","Generate requests-based tests for methods, payloads, headers, auth, timeouts and response validation."],
+  ["contract-testing","API Contract Testing","Validate consumer/provider contracts, schema evolution, compatibility and breaking-change detection."],
+  ["database-automation","Database Automation","Automate safe database assertions and transaction cleanup using isolated test data and least privilege."],
+  ["appium-framework","Appium Framework Design","Design Appium cross-platform architecture, capabilities, driver lifecycle, page objects and device allocation."],
+  ["appium-android","Appium Android Automation","Automate Android flows with UiAutomator2, accessibility IDs, permissions, activity lifecycle and logs."],
+  ["appium-ios","Appium iOS Automation","Automate iOS flows with XCUITest, WDA, signing prerequisites, simulator/device capabilities and accessibility locators."],
+  ["mobile-cloud","Cloud Device Testing","Plan device-farm matrix, OS/device coverage, concurrency, artifacts, cost and reproducibility."],
+  ["automation-reporting","Automation Reporting","Create actionable reports with suite status, failure category, screenshots, traces, logs and trend metrics."],
+  ["automation-maintenance","Automation Maintenance Review","Identify brittle tests, duplication, poor abstractions, flaky dependencies and maintenance hotspots."],
+  ["ai-test-generation","AI Test Generation","Use an LLM to derive tests from requirements with traceability, uncertainty labels, human review and duplicate detection."],
+] as const;
+
+const appendSpecialistPack=(categorySlug:'qa'|'qa-automation',prefix:'QA'|'QAA',tasks:readonly (readonly [string,string,string])[])=>{
+ const category=localCategories.find(c=>c.slug===categorySlug);
+ if(!category)return;
+ for(const [key,label,focus] of tasks){
+  const slug=categorySlug+'-specialist-'+key;
+  if(localCommands.some(c=>c.slug===slug))continue;
+  const syntax='/'+prefix+'_SPECIALIST_'+key.replace(/-/g,'_').toUpperCase();
+  localCommands.push({
+   id:localCommands.length+1,slug,name:(categorySlug==='qa'?'Quality Assurance: ':'QA Automation: ')+label,syntax,
+   description:label+' for practical QA engineering teams.',
+   instruction_template:'Act as a senior QA engineer specializing in '+label.toLowerCase()+'. '+focus+'\\n\\nWork from the supplied application context, requirements, artifacts and authorized scope. Start by listing assumptions and missing inputs. Provide a step-by-step method, concrete examples, test data or code where appropriate, expected outcomes, negative and boundary cases, and traceability to business risk. Explain setup and execution prerequisites. Define observable pass/fail criteria, evidence to capture, failure triage, cleanup and follow-up regression coverage. Distinguish automated checks from manual judgment. For automation, use stable locators, explicit synchronization, isolated data, reliable teardown, readable assertions, diagnostics and CI suitability. Never claim a test was executed unless execution evidence is provided; never invent product behavior, test results or coverage. For security testing, require explicit authorization and stay within the approved target and scope.',
+   example_input:'Apply '+label.toLowerCase()+' to a web application with documented requirements.',
+   example_output:'A practical '+label.toLowerCase()+' deliverable with steps, examples, evidence and acceptance criteria.',
+   difficulty:['security-test-planning','performance-test-planning','playwright-framework','selenium-grid','appium-ios','contract-testing','pytest-architecture'].includes(key)?'advanced':'intermediate',
+   status:'reviewed',tags:[categorySlug,key,'quality-engineering','testing'],
+   limitations:'Reusable prompt template, not proof of test execution or a native provider integration. Validate against the actual application, tool versions and approved test scope.',
+   category
+  });
+ }
+};
+appendSpecialistPack('qa','QA',qaSpecialistTasks);
+appendSpecialistPack('qa-automation','QAA',qaAutomationSpecialistTasks);
+
 export const localWorkflows:Workflow[]=[{id:1,slug:'qa-web-audit',name:'Web QA Audit',description:'Structured authorized website quality workflow.',category:'qa',difficulty:'intermediate',steps:['Clarify scope and authorization','Map user journeys','Design functional and responsive checks','Run tests and capture evidence','Prioritize defects and report']},{id:2,slug:'new-feature-build',name:'Build a New Feature',description:'Implement a feature with quality gates.',category:'development',difficulty:'intermediate',steps:['Clarify requirements','Design API and data model','Implement vertical slice','Add automated tests','Review security and deployment']},{id:3,slug:'research-brief',name:'Research Brief',description:'Create an evidence-led research plan.',category:'research',difficulty:'beginner',steps:['Define question','List claims needing evidence','Gather authoritative sources','Compare evidence','Produce cited summary']}]
 export const filterLocalCommands=(q:string,category:string,difficulty:string)=>{const t=q.trim().toLowerCase();return localCommands.filter(c=>(!category||c.category.slug===category)&&(!difficulty||c.difficulty===difficulty)&&(!t||[c.name,c.syntax,c.description,c.instruction_template,...c.tags].join(' ').toLowerCase().includes(t)))}
 const KEY='satyone.saved-prompts.v1'
