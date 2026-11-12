@@ -16,7 +16,7 @@ def test_health_uses_local_sqlite():
 def test_commands_are_seeded():
     response = client.get("/api/v1/commands?limit=1000")
     assert response.status_code == 200
-    assert len(response.json()) >= 680
+    assert len(response.json()) >= 1100
     slugs = {item["slug"] for item in response.json()}
     assert {"agent-plan", "research-plan", "privacy-review", "a11y-audit"} <= slugs
 
@@ -110,7 +110,7 @@ def test_expanded_command_catalogue_exceeds_600_and_is_unique():
     response = client.get("/api/v1/commands?limit=1000")
     assert response.status_code == 200
     items = response.json()
-    assert len(items) >= 600
+    assert len(items) >= 1100
     assert len({item["slug"] for item in items}) == len(items)
     assert len({item["syntax"] for item in items}) == len(items)
     assert any(item["category"]["slug"] == "finance-accounting" for item in items)
@@ -128,7 +128,7 @@ def test_prompt_builder_produces_detailed_structured_brief():
     })
     assert response.status_code == 200
     prompt = response.json()["prompt"]
-    for heading in ["ROLE, SENIORITY", "MISSION AND SUCCESS", "CONTEXT, INPUTS", "SCOPE AND BOUNDARIES", "EXECUTION METHOD", "REQUIRED DELIVERABLE", "QUALITY, VALIDATION", "FINAL SELF-REVIEW"]:
+    for heading in ["EXPERT ROLE", "OBJECTIVE AND SUCCESS", "CONTEXT AND INPUT", "SCOPE, NON-GOALS", "DETAILED EXECUTION PLAN", "REQUIRED DELIVERABLE", "CASE MATRIX", "QUALITY ASSURANCE", "FAILURE HANDLING", "FINAL QUALITY GATE"]:
         assert heading in prompt
     assert "Include rollback criteria" in prompt
 
@@ -146,3 +146,29 @@ def test_qa_and_qa_automation_command_packs_are_available():
     assert "qa-automation-specialist-playwright-framework" in slugs
     assert "qa-automation-specialist-appium-ios" in slugs
     assert all(len(item["instruction_template"]) > 400 for item in qa + automation)
+
+
+def test_advanced_commands_expand_all_domains():
+    response = client.get("/api/v1/commands?limit=2000")
+    assert response.status_code == 200
+    items = response.json()
+    assert len(items) >= 1200
+    advanced = [item for item in items if "-advanced-" in item["slug"]]
+    assert len(advanced) >= 380
+    assert len({item["slug"] for item in advanced}) == len(advanced)
+    assert all(item["difficulty"] == "advanced" for item in advanced)
+
+
+def test_prompt_builder_includes_context_specific_edge_cases():
+    response = client.post("/api/v1/prompt-builder", json={
+        "objective": "Build a Playwright automation framework for a customer portal",
+        "audience": "QA automation engineer",
+        "tone": "technical and precise",
+        "output_format": "implementation plan and code examples",
+        "constraints": ["Use Python and Pytest"],
+        "command_slugs": ["qa-automation-specialist-playwright-framework"],
+    })
+    assert response.status_code == 200
+    prompt = response.json()["prompt"]
+    for term in ["flaky-test triage", "session expiry", "test isolation", "rollback", "acceptance criteria", "Use Python and Pytest"]:
+        assert term.lower() in prompt.lower()
