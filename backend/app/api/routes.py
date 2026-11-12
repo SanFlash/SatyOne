@@ -1,4 +1,7 @@
 from fastapi import APIRouter, Depends, HTTPException, Query
+from app.core.config import settings
+from app.schemas import ExecuteIn
+from app.providers.ollama_adapter import OllamaAdapter
 from sqlalchemy import or_
 from sqlalchemy.orm import Session, joinedload
 from app.db import get_db
@@ -109,12 +112,36 @@ def delete_saved_prompt(prompt_id: int, owner_key: str = Query(default="local-de
     return {"deleted": True, "id": prompt_id}
 
 
-@router.post("/execute/openai")
-async def execute_openai(payload: PromptBuildIn, db: Session = Depends(get_db)):
-    built = build_prompt(payload, db)
+@router.get("/ai/status")
+async def ai_status():
+    """Report configured provider availability without exposing credentials."""
+    import httpx
+    ollama_available = False
     try:
-        return await OpenAIAdapter().generate(built["prompt"])
+        async with httpx.AsyncClient(timeout=2.5) as client:
+            response = await client.get(settings.ollama_base_url.rstrip("/") + "/api/tags")
+            ollama_available = response.status_code == 200
+    except Exception:
+        pass
+    return {
+        "providers": [
+            {"id": "ollama", "configured": True, "available": ollama_available, "default_model": settings.ollama_model, "local": True},
+            {"id": "openai", "configured": bool(settings.openai_api_key), "available": bool(settings.openai_api_key), "default_model": settings.openai_model, "local": False},
+        ]
+    }
+
+@router.post("/execute/{provider}")
+async def execute_provider(provider: str, payload: ExecuteIn):
+    """Execute a user-supplied prompt using an explicitly configured provider."""
+    if provider == "ollama":
+        adapter = OllamaAdapter()
+    elif provider == "openai":
+        adapter = OpenAIAdapter()
+    else:
+        raise HTTPException(status_code=404, detail="Unsupported provider. Choose ollama or openai.")
+    try:
+        return await adapter.generate(payload.prompt, payload.model)
     except RuntimeError as exc:
-        raise HTTPException(status_code=400, detail=str(exc))
+        raise HTTPException(status_code=503, detail=str(exc))
     except Exception as exc:
         raise HTTPException(status_code=502, detail=f"Provider request failed: {type(exc).__name__}")
