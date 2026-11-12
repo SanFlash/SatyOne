@@ -27,3 +27,5 @@ button:focus-visible,a:focus-visible,input:focus-visible,textarea:focus-visible,
 .panel .constraints-input{min-height:95px}
 .studio-checks li::marker{color:#8e81f7}
 @media(max-width:540px){.panel input[type=file]{font-size:10px}.studio-checks{font-size:11px}}
+
+.execute-panel{margin-top:17px;padding:14px;border:1px solid #303956;border-radius:9px;background:#0b1220}.execute-panel .two-fields{margin-bottom:12px}.execute-panel select{width:100%;height:40px;padding:0 10px;background:#111a2a;border:1px solid #35415d;border-radius:7px;color:#e6eaf5;font-size:11px}.execute-panel .builder-text-input{margin:0;height:40px}.execute-panel .results-meta{margin:10px 0 0;line-height:1.5}.ai-result{margin-top:16px;padding:14px;border:1px solid #3a4262;border-radius:9px;background:#10182a}.ai-result .card-top{align-items:center;margin-bottom:10px}.ai-result .card-top b{font:11px 'DM Mono';letter-spacing:.6px;color:#b7c2dc}.ai-result .prompt-output{max-height:520px;overflow:auto;white-space:pre-wrap;overflow-wrap:anywhere}
