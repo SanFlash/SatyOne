@@ -44,7 +44,7 @@ CATALOG.extend([
 ("a11y-audit","Accessibility Audit","/A11Y_AUDIT","Plan an accessibility review.","Audit {interface} against applicable accessibility guidance. Cover keyboard operation, focus, semantics, labels, contrast, zoom/reflow, motion, errors, screen readers and manual testing. Distinguish automated findings from human verification.","Review a registration flow.","An actionable accessibility test plan.","intermediate",["accessibility","wcag","ux"]),
 ("ux-review","UX Heuristic Review","/UX_REVIEW","Review a user experience systematically.","Review {journey} for usability. Assess clarity, feedback, consistency, error prevention, recovery, cognitive load, mobile behavior and trust. Give evidence-based findings with severity and recommended changes.","Review onboarding.","A prioritized UX report.","intermediate",["ux","product"])]),
 ])
-\n
+
 
 PROVIDERS=[
 ("openai","OpenAI","Official API integration can be enabled with a server-side API key.","https://platform.openai.com/docs","directory"),
