@@ -2,7 +2,7 @@
 
 **One Intelligence. Every AI. Unlimited Possibilities.**
 
-SatyOne is a local-first AI command intelligence workspace. It includes a searchable 600+ cross-industry command catalogue, structured prompt builder, saved prompts, provider directory and repeatable workflow playbooks.
+SatyOne is a local-first AI command intelligence workspace. It includes a searchable 1,200+ cross-industry command catalogue, adaptive prompt generator with context-aware edge-case matrices, implementation detail, validation gates and failure recovery, saved prompts, provider directory and repeatable workflow playbooks.
 
 ## Local-first architecture
 
@@ -61,7 +61,7 @@ To back up the database, stop the API and copy `backend/data/satyone.db` to a sa
 
 To rebuild the starter database from scratch, stop the API, back up the database, delete `backend/data/satyone.db`, and run `python -m app.init_db` from the `backend` directory. This deletes locally saved prompts too.
 
-## Cross-industry role library
+## Advanced command ecosystem\n\nThe command library now combines the original 32-domain x 24-pattern foundation, specialist QA/QA Automation packs, and a second advanced layer of 12 operating patterns across all 32 domains (384 additional command templates). The advanced layer covers discovery, implementation, troubleshooting, optimization, documentation, training, scenario design, governance, migration, vendor evaluation, continuous improvement and decision records. The API exposes up to 2,000 commands per request.\n\n## Cross-industry role library
 
 SatyOne is designed as a cross-industry prompt and workflow workspace, not a QA-only command tool. Its command catalogue includes software and QA, business strategy, project management, finance and accounting, marketing and sales, HR and recruiting, education, healthcare administration and clinician-reviewed patient education, legal operations and compliance drafting, science and research, engineering and manufacturing, design and media, hospitality and travel, public sector and nonprofit work, real estate and construction, customer support, supply chain and logistics, and personal productivity.
 
