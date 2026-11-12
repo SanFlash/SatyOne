@@ -2,7 +2,7 @@
 
 **One Intelligence. Every AI. Unlimited Possibilities.**
 
-SatyOne is a local-first AI command intelligence workspace. It includes a searchable command catalogue, prompt builder, saved prompts, provider directory and repeatable workflow playbooks.
+SatyOne is a local-first AI command intelligence workspace. It includes a searchable 600+ cross-industry command catalogue, structured prompt builder, saved prompts, provider directory and repeatable workflow playbooks.
 
 ## Local-first architecture
 
@@ -163,4 +163,4 @@ These documents are engineering and policy baselines, not legal advice or a cert
 
 ## Current release boundary
 
-The current codebase remains a local-first single-user starter. The documentation describes the intended product scope and release gates; it does not mean every listed capability has already been implemented. Public multi-user launch requires authentication, object-level authorization, tenant isolation, abuse controls, privacy workflows, persistent hosting, tested backups and security/legal review.
+The current codebase remains a local-first single-user starter. The expanded catalogue seeds 32 professional domains × 24 reusable task patterns (768 domain-specific command combinations), in addition to the original commands. Seeding is idempotent and does not duplicate existing slugs. The frontend also bundles the generated command combinations so the catalogue remains searchable offline. Prompt Builder output now uses a detailed execution brief with role, mission, assumptions, scope, phased method, deliverable structure, quality gates, risk controls and final self-review. The documentation describes the intended product scope and release gates; it does not mean every listed capability has already been implemented. Public multi-user launch requires authentication, object-level authorization, tenant isolation, abuse controls, privacy workflows, persistent hosting, tested backups and security/legal review.
