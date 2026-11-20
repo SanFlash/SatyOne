@@ -164,3 +164,30 @@ These documents are engineering and policy baselines, not legal advice or a cert
 ## Current release boundary
 
 The current codebase remains a local-first single-user starter. The expanded catalogue seeds 32 professional domains × 24 reusable task patterns (768 domain-specific command combinations), in addition to the original commands. Seeding is idempotent and does not duplicate existing slugs. The frontend also bundles the generated command combinations so the catalogue remains searchable offline. Prompt Builder output now uses a detailed execution brief with role, mission, assumptions, scope, phased method, deliverable structure, quality gates, risk controls and final self-review. The documentation describes the intended product scope and release gates; it does not mean every listed capability has already been implemented. Public multi-user launch requires authentication, object-level authorization, tenant isolation, abuse controls, privacy workflows, persistent hosting, tested backups and security/legal review.
+
+
+## SatyOne browser extension (Chrome and Edge)
+
+The repository includes a Manifest V3 companion extension in `extension/`. It provides:
+- One-click access to the SatyOne web app.
+- A popup prompt composer with audience and tone controls.
+- A right-click context-menu action, **Build a prompt with SatyOne**, for selected webpage text.
+- Local prompt generation and clipboard copy. The extension does not transmit selected text to a server.
+
+### Install in Chrome
+
+1. Open `chrome://extensions`.
+2. Enable **Developer mode**.
+3. Select **Load unpacked**.
+4. Choose the repository's `extension` folder.
+5. Pin **SatyOne — AI Command Companion** from the Extensions menu.
+
+### Install in Microsoft Edge
+
+1. Open `edge://extensions`.
+2. Enable **Developer mode**.
+3. Select **Load unpacked** and choose the same `extension` folder.
+
+Select text on a webpage, right-click and choose **Build a prompt with SatyOne**, or click the pinned extension icon to open its prompt composer. Use **Open SatyOne** to launch the full web workspace.
+
+This is an unpacked developer installation. Publishing to the Chrome Web Store or Edge Add-ons requires store developer accounts, listing assets, privacy disclosures and review. The extension is a quick-access companion; it does not make the separate FastAPI backend available or synchronize browser-local prompts with the web app.
