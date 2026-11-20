@@ -1,0 +1,2 @@
+chrome.runtime.onInstalled.addListener(()=>{chrome.contextMenus.create({id:'satyone-selection',title:'Build a prompt with SatyOne',contexts:['selection']})});
+chrome.contextMenus.onClicked.addListener(async(info)=>{if(info.menuItemId!=='satyone-selection'||!info.selectionText)return;await chrome.storage.local.set({selectedText:info.selectionText});try{await chrome.action.openPopup()}catch{chrome.tabs.create({url:'https://satyone.vercel.app'})}});
