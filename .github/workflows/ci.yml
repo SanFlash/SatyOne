@@ -29,3 +29,21 @@ jobs:
           node-version: "20"
       - run: npm install
       - run: npm run build
+
+  extension:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+      - name: Validate extension manifest
+        run: node -e "const m=require('./extension/manifest.json'); if(m.manifest_version!==3 || !m.action?.default_popup || !m.background?.service_worker) process.exit(1)"
+      - name: Check extension JavaScript syntax
+        run: |
+          node --check extension/popup.js
+          node --check extension/service-worker.js
+      - name: Verify extension assets
+        run: |
+          test -s extension/popup.html
+          test -s extension/popup.css
