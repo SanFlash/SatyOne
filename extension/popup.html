@@ -1,0 +1,10 @@
+<!doctype html>
+<html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>SatyOne Companion</title><link rel="stylesheet" href="popup.css"></head>
+<body><main class="shell">
+<header class="brand"><div class="mark">✦</div><div><strong>SatyOne</strong><span>AI COMMAND COMPANION</span></div><small>1.0</small></header>
+<section class="intro"><p class="eyebrow">QUICK ACCESS</p><h1>Make your next prompt count.</h1><p>Capture selected text, shape it into a clear instruction, and continue in SatyOne.</p></section>
+<label for="objective">What do you want AI to do?</label><textarea id="objective" rows="4" placeholder="Describe a task or select text on any webpage…"></textarea>
+<div class="fields"><div><label for="audience">Audience</label><input id="audience" value="General professional audience"></div><div><label for="tone">Tone</label><select id="tone"><option>Clear and professional</option><option>Concise and direct</option><option>Detailed and technical</option><option>Beginner-friendly</option><option>Critical and analytical</option></select></div></div>
+<div class="actions"><button id="generate" class="primary">Generate prompt</button><button id="openApp" class="secondary">Open SatyOne ↗</button></div>
+<section id="resultWrap" class="result hidden"><div class="resultHead"><strong>Generated instruction</strong><button id="copy" class="copy">Copy</button></div><pre id="result"></pre></section>
+<footer>Local-first: selected text and prompts stay in this browser until you choose to copy them or open SatyOne.</footer><p id="status" role="status" aria-live="polite"></p></main><script src="popup.js"></script></body></html>
