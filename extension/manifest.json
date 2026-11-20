@@ -1,0 +1,9 @@
+{
+  "manifest_version": 3,
+  "name": "SatyOne — AI Command Companion",
+  "version": "1.0.0",
+  "description": "Quickly open SatyOne and turn selected webpage text into structured AI prompts.",
+  "action": {"default_title":"SatyOne Companion","default_popup":"popup.html"},
+  "background": {"service_worker":"service-worker.js"},
+  "permissions": ["contextMenus","storage"]
+}
